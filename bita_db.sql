@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 11 Okt 2021 pada 07.49
+-- Waktu pembuatan: 12 Okt 2021 pada 06.38
 -- Versi server: 10.4.11-MariaDB
 -- Versi PHP: 7.4.1
 
@@ -31,16 +31,17 @@ SET time_zone = "+00:00";
 CREATE TABLE `ajuan` (
   `ajuanid` int(11) NOT NULL,
   `userid` varchar(30) NOT NULL,
-  `keterangan` text NOT NULL,
-  `nama_dosen` int(30) NOT NULL,
-  `nip_dosen` int(30) NOT NULL,
+  `keterangan` text DEFAULT NULL,
+  `nama_dosen` varchar(30) NOT NULL,
+  `nip_dosen` varchar(30) NOT NULL,
   `nama_mhs` varchar(30) NOT NULL,
   `nim_mhs` varchar(30) NOT NULL,
-  `tanggal_bim` date NOT NULL,
-  `jam_bim` time NOT NULL,
+  `jurusan` varchar(30) NOT NULL,
+  `tanggal_bim` date DEFAULT NULL,
+  `jam_bim` time DEFAULT NULL,
   `pilihan_tgl_mulai` date NOT NULL,
   `pilihan_tgl_akhir` date NOT NULL,
-  `status` varchar(30) NOT NULL,
+  `status` varchar(10) NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -54,7 +55,7 @@ CREATE TABLE `ajuan` (
 CREATE TABLE `user` (
   `userid` varchar(30) NOT NULL,
   `nama` varchar(30) NOT NULL,
-  `password` varchar(30) NOT NULL,
+  `password` text NOT NULL,
   `role` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -90,10 +91,10 @@ ALTER TABLE `ajuan`
 --
 
 --
--- Ketidakleluasaan untuk tabel `user`
+-- Ketidakleluasaan untuk tabel `ajuan`
 --
-ALTER TABLE `user`
-  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `ajuan` (`userid`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `ajuan`
+  ADD CONSTRAINT `ajuan_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `user` (`userid`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
