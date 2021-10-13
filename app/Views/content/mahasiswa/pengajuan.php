@@ -14,10 +14,10 @@
 </div>
 
 <div class="row table-responsive">
-    <table class="table text-center" id="ajuanTable">
+    <table class="table" id="ajuanTable">
         <thead>
             <tr>
-                <th scope="col">#</th>
+                <th scope="col">ID</th>
                 <th scope="col">Tanggal Submit</th>
                 <th scope="col">Keterangan</th>
                 <th scope="col">Nama Dosen</th>
@@ -31,7 +31,7 @@
         <tbody>
             <?php foreach ($ajuan as $data) : ?>
                 <tr>
-                    <th scope="row">1</th>
+                    <td><?= $data['ajuanid']; ?></td>
                     <td><?= $data['created_at']; ?></td>
                     <td><?= $data['keterangan']; ?></td>
                     <td><?= $data['nama_dosen']; ?></td>
@@ -46,8 +46,8 @@
                         ?></td>
                     <td><?= $data['status']; ?></td>
                     <td>
-                        <a href="<?= base_url('mahasiswa/delete/' . $data['ajuanid']); ?>">Hapus</a>
-                        <a href="">Cetak Bukti</a>
+                        <a href="<?= base_url('mahasiswa/delete/' . $data['ajuanid']); ?>" onclick="return confirm('Apakah anda yakin untuk menghapus ajuan ?')">Hapus</a>
+                        <a href="<?= base_url('mahasiswa/print/' . $data['ajuanid']); ?>">Cetak Bukti</a>
                     </td>
                 </tr>
             <?php endforeach; ?>

@@ -11,6 +11,7 @@ class Mahasiswa extends BaseController
     protected $ajuanmodel, $usermodel, $session;
     public function __construct()
     {
+        helper('text');
         $this->ajuanmodel = new AjuanModel();
         $this->usermodel = new UserModel();
         $this->session = \Config\Services::session();
@@ -63,9 +64,14 @@ class Mahasiswa extends BaseController
     {
         $dosen = $this->usermodel->find($this->request->getPost('nip'));
 
+        do {
+            $ajuanid = random_string('numeric', 10);
+        } while ($this->ajuanmodel->find($ajuanid));
+
         if ($dosen['role'] == 'Dosen') {
             $this->ajuanmodel->save(
                 [
+                    'ajuanid' => $ajuanid,
                     'userid' => $this->request->getPost('userid'),
                     'nip_dosen' => $this->request->getPost('nip'),
                     'nama_dosen' => $dosen['nama'],
@@ -102,5 +108,14 @@ class Mahasiswa extends BaseController
 
         $this->ajuanmodel->delete($id);
         return redirect()->to('/Mahasiswa/pengajuan/');
+    }
+
+    public function print($id)
+    {
+        $data = [
+            'ajuan' => $this->ajuanmodel->find($id)
+        ];
+
+        return view('layout/print', $data);
     }
 }
