@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\AjuanModel;
 use App\Models\UserModel;
+use Dompdf\Dompdf;
 
 
 class Mahasiswa extends BaseController
@@ -112,10 +113,23 @@ class Mahasiswa extends BaseController
 
     public function print($id)
     {
+        $ajuan = $this->ajuanmodel->find($id);
         $data = [
-            'ajuan' => $this->ajuanmodel->find($id)
+            'ajuan' => $ajuan
         ];
 
-        return view('layout/print', $data);
+        $filename = $ajuan['ajuanid'] . '-BiTA';
+        // instantiate and use the dompdf class
+        $dompdf = new Dompdf();
+        // load HTML content
+        $dompdf->loadHtml(view('layout/print', $data));
+        // (optional) setup the paper size and orientation
+        $dompdf->setPaper('A4', 'portrait');
+        // render html as PDF
+        $dompdf->render();
+        // output the generated pdf
+        $dompdf->stream($filename);
+
+        return redirect()->to('/mahasiswa/pengajuan/');
     }
 }
