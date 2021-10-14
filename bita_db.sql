@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 12 Okt 2021 pada 06.38
+-- Waktu pembuatan: 13 Okt 2021 pada 16.49
 -- Versi server: 10.4.11-MariaDB
 -- Versi PHP: 7.4.1
 
@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `ajuan` (
-  `ajuanid` int(11) NOT NULL,
+  `ajuanid` varchar(10) NOT NULL,
   `userid` varchar(30) NOT NULL,
   `keterangan` text DEFAULT NULL,
   `nama_dosen` varchar(30) NOT NULL,
@@ -75,16 +75,6 @@ ALTER TABLE `ajuan`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`userid`);
-
---
--- AUTO_INCREMENT untuk tabel yang dibuang
---
-
---
--- AUTO_INCREMENT untuk tabel `ajuan`
---
-ALTER TABLE `ajuan`
-  MODIFY `ajuanid` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
