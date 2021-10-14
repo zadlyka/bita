@@ -29,6 +29,9 @@ class User extends BaseController
             if ($user['password'] == md5($password)) {
                 $this->session->set('userid', $user['userid']);
                 $this->session->set('nama', $user['nama']);
+                if($user['role'] === 'Dosen'){
+                    return redirect()->to('/dosen');
+                }
                 return redirect()->to('/mahasiswa');
             } else {
                 $this->session->setFlashData('alert', '<div class="alert alert-warning alert-dismissible fade show" role="alert">
