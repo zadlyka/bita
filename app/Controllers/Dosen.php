@@ -13,8 +13,6 @@ class Dosen extends BaseController
         $this->ajuanmodel = new AjuanModel();
         $this->usermodel = new UserModel();
         $this->session = \Config\Services::session();
-        //$this->uri = current_url(true);
-        //$this->uri = \Config\Services::request();
     }
     
     public function index()
@@ -35,6 +33,8 @@ class Dosen extends BaseController
             'nama' => $this->session->get("nama"),
             'pengajuan' => $this->ajuanmodel->where('status', 'Proses')
                 ->where('nip_dosen', $this->session->get("userid"))->findAll(),
+            'disetujui' => $this->ajuanmodel->where('status', 'Disetujui')
+                ->where('nip_dosen', $this->session->get("userid"))->findAll(),
             'ditolak' => $this->ajuanmodel->where('status', 'Ditolak')
                 ->where('nip_dosen', $this->session->get("userid"))->findAll()
         ];
@@ -44,7 +44,6 @@ class Dosen extends BaseController
 
     public function pengajuan()
     {
-        //$this->uri = \Config\Services::request();
         if (!$this->session->get("userid")) {
             $this->session->setFlashData('alert', '<div class="alert alert-warning alert-dismissible fade show" role="alert">
                     <strong>Alert!</strong> Silahkan login terlebih dahulu.
@@ -82,18 +81,26 @@ class Dosen extends BaseController
         //\edit code
     }
     
-    public function update($id = null)
+    public function update()
     {
-        //\update code
-        $id = $this->ajuanmodel->find($this->request->getPost('id_ajuan'));
+        if (!$this->session->get('userid')) {
+            $this->session->setFlashdata('alert', 
+                '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>Alert!</strong>Silahkan login terlebih dahulu.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>'
+            );
+            return redirect('/');
+        }
+
+        // $this->ajuanmodel = new AjuanModel();
+        $id = $this->request->getPost('ajuanid');
         $data = [
             'tanggal_bim' => date($this->request->getPost('tgl_bim')),
             'jam_bim' => date($this->request->getPost('jam_bim')),
             'status' => 'Disetujui'
         ];
-        $this->ajuanmodel->update($id, $data
-            
-        );
+        $this->ajuanmodel->update($id, $data);
         $this->session->setFlashData('alert', 
             '<div class="alert alert-warning alert-dismissible fade show" role="alert">
                 <strong>Submited!</strong> Ajuan telah disetujui.
@@ -104,17 +111,25 @@ class Dosen extends BaseController
         return redirect()->to('/Dosen/pengajuan/');
     }
 
-    public function cancel($id = null)
+    public function cancel()
     {
-        //\update code
-        $id = $this->ajuanmodel->find($this->request->getPost('id_ajuan'));
+        if (!$this->session->get('userid')) {
+            $this->session->setFlashdata('alert', 
+                '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>Alert!</strong>Silahkan login terlebih dahulu.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>'
+            );
+            return redirect('/');
+        }
+
+        // $this->ajuanmodel = new AjuanModel();
+        $id = $this->request->getPost('ajuanID');
         $data = [
             'keterangan' => $this->request->getPost('keterangan'),
             'status' => 'Ditolak',
         ];
-        $this->ajuanmodel->update($id, $data
-            
-        );
+        $this->ajuanmodel->update($id, $data);
         $this->session->setFlashData('alert', 
             '<div class="alert alert-warning alert-dismissible fade show" role="alert">
                 <strong>Submited!</strong> Ajuan telah ditolak.
@@ -125,8 +140,18 @@ class Dosen extends BaseController
         return redirect()->to('/Dosen/pengajuan/');
     }
     
-    public function delete($id = null)
+    public function delete($id)
     {
+        if (!$this->session->get('userid')) {
+            $this->session->setFlashdata('alert', 
+                '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>Alert!</strong>Silahkan login terlebih dahulu.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>'
+            );
+            return redirect('/');
+        }
+
         $this->session->setFlashData('alert', '<div class="alert alert-warning alert-dismissible fade show" role="alert">
                     <strong>Deleted!</strong> Ajuan telah dihapus.
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
