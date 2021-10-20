@@ -1,0 +1,92 @@
+.bita {
+  font-size: 40px;
+}
+
+.home .container {
+  background-color: #5271ff;
+  border-radius: 20px;
+  color: white;
+}
+
+.pengajuan .bb {
+  border-radius: 20px;
+}
+
+.register {
+  color: #5271ff;
+}
+
+.header {
+  padding: 20px;
+}
+
+.header a {
+  color: black;
+}
+
+.header .nav {
+  margin-top: 12px;
+}
+
+.header img {
+  margin-top: 2px;
+}
+
+.table-baru {
+  background-color: #fcac00;
+}
+
+.table-baru tr th {
+  font-weight: 0;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 15px;
+}
+
+.table-baru tr td {
+  padding-left: 15px;
+}
+
+@media (max-width: 768px) {
+  .container {
+    border-radius: 0 !important;
+  }
+
+  .bb {
+    margin: 4px 0 18px 0 !important;
+    border-radius: 0 !important;
+  }
+
+  .home h1,
+  p {
+    text-align: center;
+  }
+
+  .home h1 {
+    font-size: 40px;
+  }
+
+  .home img {
+    margin: 20px auto;
+    width: 80%;
+  }
+
+  .baru {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .home h1 {
+    font-size: 35px;
+  }
+
+  .home img {
+    width: 90%;
+  }
+
+  .tanggal {
+    margin-bottom: -20px;
+  }
+}
